@@ -1,6 +1,9 @@
 spring:
   application:
     name: DaymaModaInfantil
-
+cloudinary:
+  cloud-name: dn10sqrny
+  api-key: 895454968434649
+  api-secret: eQRvJbiC8lR3TzgCC4Kg7iyC-rk
 server:
   port: 8080

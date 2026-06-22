@@ -1,10 +1,25 @@
 spring:
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
   datasource:
     url: ${DB_URL}
     username: ${DB_USER}
     password: ${DB_PASSWORD}
-
+  security:
+    user:
+      name: none
+  session:
+    jdbc:
+      initialize-schema: always
+  output:
+    ansi:
+      enabled: ALWAYS
   jpa:
     hibernate:
-      ddl-auto: validate
-    show-sql: false
+      ddl-auto: update
+    show-sql: true
+jwt:
+  secret: ogVD0JMLscHsng7woUCi1P1xj3Yj1D5YQRk0p3KtM4P
+  expiration-ms: 86400000
