@@ -4,11 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
-public class SizeDto {
+@AllArgsConstructor
+@NoArgsConstructor
+public class OrderStatusDto {
     private Long id;
-    private String size;
+    private String status;
     private String code;
 }

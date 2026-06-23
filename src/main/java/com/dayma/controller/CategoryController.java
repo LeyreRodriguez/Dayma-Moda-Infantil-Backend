@@ -1,10 +1,8 @@
 package com.dayma.controller;
 
 import com.dayma.dto.CategoryDto;
-import com.dayma.dto.SizeDto;
 import com.dayma.dto.response.GenericResponseDto;
 import com.dayma.service.CategoryService;
-import com.dayma.service.SizeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

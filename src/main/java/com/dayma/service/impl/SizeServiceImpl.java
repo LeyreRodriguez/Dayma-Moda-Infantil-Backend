@@ -21,8 +21,10 @@ public class SizeServiceImpl implements SizeService {
         return sizeMapper.toDtoList(sizeRepository.findAll());
     }
 
-
-
+    @Override
+    public SizeDto getByCode(String code) {
+        return sizeMapper.toDto(sizeRepository.findByCode(code));
+    }
 
 
 }

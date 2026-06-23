@@ -1,14 +1,9 @@
 package com.dayma.controller;
 
-import com.dayma.dto.ProductDto;
-import com.dayma.dto.ProductFiltersRequest;
-import com.dayma.dto.ProductImageDto;
-import com.dayma.dto.ProductSizeDto;
+import com.dayma.dto.*;
 import com.dayma.dto.response.GenericResponseDto;
 import com.dayma.dto.response.PageResponseDto;
-import com.dayma.service.ProductImageService;
-import com.dayma.service.ProductService;
-import com.dayma.service.ProductSizeService;
+import com.dayma.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +21,7 @@ public class ProductController {
     private final ProductService productService;
     private final ProductImageService productImageService;
     private final ProductSizeService productSizeService;
+    private final ProductOrderService productOrderService;
 
     @GetMapping
     public ResponseEntity<GenericResponseDto<PageResponseDto<ProductDto>>> getProducts(
@@ -61,6 +57,15 @@ public class ProductController {
     public ResponseEntity<GenericResponseDto<List<ProductSizeDto>>> getProductSize(@PathVariable String code) {
         return ResponseEntity.ok(new GenericResponseDto<>(productSizeService.getProductSize(code)));
     }
+
+    @GetMapping("/order/{orderCode}")
+    public ResponseEntity<GenericResponseDto<List<ProductOrderDto>>> getProductOrder(@PathVariable String orderCode) {
+        return ResponseEntity.ok(new GenericResponseDto<>(productOrderService.getProductOrder(orderCode)));
+    }
+
+
+
+
 
 
 }

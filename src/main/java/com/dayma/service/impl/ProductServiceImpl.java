@@ -2,11 +2,11 @@ package com.dayma.service.impl;
 
 import com.dayma.dto.ProductDto;
 import com.dayma.dto.ProductFiltersRequest;
-import com.dayma.dto.ProductImageDto;
 import com.dayma.mapper.ProductMapper;
 import com.dayma.model.Product;
 import com.dayma.repository.ProductRepository;
 import com.dayma.service.ProductService;
+import com.dayma.service.UserService;
 import com.dayma.specification.ProductSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,12 +16,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
+    private final UserService userService;
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
 
@@ -47,6 +46,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductDto getProduct(String code) {
         return productMapper.toDto(productRepository.findByCode(code));
     }
+
 
 
 

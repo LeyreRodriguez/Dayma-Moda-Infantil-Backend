@@ -10,17 +10,24 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "favourites")
-public class Favourites {
+@Table(name = "shopping_cart")
+public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user")
-    private User user;
+    @JoinColumn(name = "user_id")
+    private User appUser;
 
     @ManyToOne
     @JoinColumn(name = "product")
     private Product product;
+
+    @ManyToOne
+    @JoinColumn(name = "size")
+    private Size size;
+
+    @Column(name = "quantity")
+    private Integer quantity;
 }

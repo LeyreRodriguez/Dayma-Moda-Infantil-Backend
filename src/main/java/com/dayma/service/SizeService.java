@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface SizeService {
     List<SizeDto> getAll();
+    SizeDto getByCode(String code);
 }

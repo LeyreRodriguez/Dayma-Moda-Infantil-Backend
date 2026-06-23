@@ -4,11 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
-public class SizeDto {
+@AllArgsConstructor
+@NoArgsConstructor
+public class ProductOrderDto {
+
     private Long id;
-    private String size;
-    private String code;
+    private OrderDto order;
+    private ProductDto product;
 }

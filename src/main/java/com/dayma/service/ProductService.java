@@ -11,4 +11,5 @@ import java.util.List;
 public interface ProductService {
     Page<ProductDto> getProducts(ProductFiltersRequest filters, Pageable pageable);
     ProductDto getProduct(String code);
+
 }

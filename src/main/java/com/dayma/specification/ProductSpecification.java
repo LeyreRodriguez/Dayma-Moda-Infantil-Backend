@@ -24,7 +24,7 @@ public class ProductSpecification {
             }
 
             if (filters.sizes() != null && !filters.sizes().isBlank()) {
-                String[] cols = filters.collection().split(",");
+                String[] cols = filters.sizes().split(",");
                 Subquery<Long> subquery = query.subquery(Long.class);
                 Root<ProductSize> pcRoot = subquery.from(ProductSize.class);
                 subquery.select(pcRoot.get("size").get("id"));
