@@ -1,6 +1,7 @@
 package com.dayma.security;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -75,11 +76,14 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
+    @Value("${app.front-base-url}")
+    private String frontBaseUrl;
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowedOrigins(List.of("http://localhost:5173"));
+        config.setAllowedOrigins(List.of(frontBaseUrl));
         config.setAllowedMethods(List.of(
                 "GET",
                 "POST",

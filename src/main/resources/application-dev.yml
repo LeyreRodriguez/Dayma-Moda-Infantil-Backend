@@ -43,6 +43,6 @@ server:
 google:
   client-id: ${GOOGLE_CLIENT_ID}
 app:
-  front-base-url: ${FRONT_BASE_URL}
+  front-base-url: ${FRONT_BASE_URL:http://localhost:5173}
 newsletter:
-  cron: "0 0 10 * * ?"
+  cron: "0 0 0 L * *"

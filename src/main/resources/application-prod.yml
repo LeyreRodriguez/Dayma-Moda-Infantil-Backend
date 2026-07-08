@@ -45,4 +45,4 @@ google:
 app:
   front-base-url: ${FRONT_BASE_URL}
 newsletter:
-  cron: "0 0 10 * * ?"
+  cron: "0 0 0 L * *"

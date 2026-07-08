@@ -3,3 +3,5 @@ spring:
     name: DaymaModaInfantil
   profiles:
     active: dev
+app:
+  front-base-url: ${FRONT_BASE_URL:http://localhost:5173}
