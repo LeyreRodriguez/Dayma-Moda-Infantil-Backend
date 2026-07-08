@@ -7,6 +7,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -21,7 +23,7 @@ import java.util.List;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column( unique = true, nullable = false)
@@ -29,6 +31,21 @@ public class User implements UserDetails {
 
     @Column (nullable = false)
     private String password;
+
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "registration_date")
+    private LocalDateTime registrationDate;
+
+    @Column(name = "verified")
+    private Boolean verified;
+
+    @Column(name = "verification_code")
+    private String verificationCode;
+
+    @Column(name = "newsletter")
+    private Boolean newsletter;
 
     @Enumerated(EnumType.STRING)
     private RoleEnum role;
@@ -61,7 +78,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
+        return verified == null || verified;
     }
 
 }

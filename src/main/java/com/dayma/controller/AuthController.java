@@ -1,56 +1,62 @@
 package com.dayma.controller;
 
 import com.dayma.dto.AuthResponse;
+import com.dayma.dto.GoogleLoginRequest;
 import com.dayma.dto.LoginRequest;
 import com.dayma.dto.RegisterRequest;
+import com.dayma.dto.UserDto;
 import com.dayma.dto.response.GenericResponseDto;
-import com.dayma.enums.RoleEnum;
+import com.dayma.mapper.UserMapper;
 import com.dayma.model.User;
 import com.dayma.repository.UserRepository;
-import com.dayma.security.JwtService;
+import com.dayma.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/auth")
 @RestController
 @RequiredArgsConstructor
 public class AuthController {
-    private final AuthenticationManager authManager;
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
+
+    private final UserService userService;
+    private final UserMapper userMapper;
 
     @PostMapping("/signup")
     public ResponseEntity<GenericResponseDto<AuthResponse>> signup(@RequestBody @Validated RegisterRequest req) {
-        if (userRepository.existsByEmail(req.email())) {
-            return ResponseEntity.badRequest().build();
-        }
-        User user = User.builder()
-                .email(req.email())
-                .password(passwordEncoder.encode(req.password()))
-                .role(RoleEnum.USER).build();
-
-
-        userRepository.save(user);
-        return ResponseEntity.ok(new GenericResponseDto<>(new AuthResponse(jwtService.generateToken(user))));
+        return ResponseEntity.ok(new GenericResponseDto<>(userService.signup(req)));
     }
 
     @PostMapping("/login")
     public ResponseEntity<GenericResponseDto<AuthResponse>> login(@RequestBody @Validated LoginRequest req) {
-        authManager.authenticate(
-                new UsernamePasswordAuthenticationToken(req.email(), req.password())
-        );
-        User user = userRepository.findByEmail(req.email())
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado tras autenticación"));
-        return ResponseEntity.ok(new GenericResponseDto<>(new AuthResponse(jwtService.generateToken(user))));
+        return ResponseEntity.ok(new GenericResponseDto<>(userService.login(req)));
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<GenericResponseDto<UserDto>> login() {
+        return ResponseEntity.ok(new GenericResponseDto<>(userMapper.toDto(userService.getCurrentUser())));
+    }
+
+    @PostMapping("/google/login")
+    public ResponseEntity<GenericResponseDto<AuthResponse>> googleLogin(@RequestBody @Validated GoogleLoginRequest req) {
+        return ResponseEntity.ok(new GenericResponseDto<>(userService.googleLogin(req)));
+    }
+
+    @PostMapping("/google/register")
+    public ResponseEntity<GenericResponseDto<AuthResponse>> googleSignup(@RequestBody @Validated GoogleLoginRequest req) {
+        return ResponseEntity.ok(new GenericResponseDto<>(userService.googleSignup(req)));
+    }
+
+    @GetMapping("/verify")
+    public ResponseEntity<String> verify(@RequestParam String code) {
+        String html = userService.verify(code);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.TEXT_HTML)
+                .body(html);
     }
 
 }
