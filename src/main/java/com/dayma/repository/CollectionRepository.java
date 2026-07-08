@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface CollectionRepository extends JpaRepository<Collection, Long> {
 
     Collection findByFeaturedTrue();
+
+    Collection findByCode(String code);
 }

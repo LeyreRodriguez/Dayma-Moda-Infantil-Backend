@@ -8,6 +8,7 @@ import com.dayma.model.Product;
 import com.dayma.repository.CollectionRepository;
 import com.dayma.service.CollectionService;
 import com.dayma.service.ProductCollectionService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +41,35 @@ public class CollectionServiceImpl implements CollectionService {
                 .imageUrl(product.getImageUrl())
                 .build();
 
+    }
+
+    @Override
+    @Transactional
+    public CollectionDto create(CollectionDto collection) {
+
+        if(collection.getFeatured()){
+            Collection featured = collectionRepository.findByFeaturedTrue();
+            featured.setFeatured(false);
+            collectionRepository.save(featured);
+
+        }
+        Collection col = new Collection();
+
+        col.setDescription(collection.getDescription());
+        col.setName(collection.getName());
+        col.setFeatured(collection.getFeatured());
+
+        col = collectionRepository.save(col);
+
+        col.setCode("CL-" + col.getId());
+
+        return collectionMapper.toDto(col);
+
+    }
+
+    @Override
+    public Collection getCollection(String collectionCode) {
+        return collectionRepository.findByCode(collectionCode);
     }
 
 }

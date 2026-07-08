@@ -7,10 +7,7 @@ import com.dayma.service.CollectionService;
 import com.dayma.service.ProductCollectionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,5 +32,10 @@ public class CollectionController {
     @GetMapping("/{productCode}")
     public ResponseEntity<GenericResponseDto<CollectionDto>> getCollectionByProduct(@PathVariable String productCode) {
         return ResponseEntity.ok(new GenericResponseDto<>(productCollectionService.getCollectionByProduct(productCode)));
+    }
+
+    @PostMapping
+    public ResponseEntity<GenericResponseDto<CollectionDto>> create(@RequestBody CollectionDto collection) {
+        return ResponseEntity.ok(new GenericResponseDto<>(collectionService.create(collection)));
     }
 }

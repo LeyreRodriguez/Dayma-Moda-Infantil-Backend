@@ -12,7 +12,7 @@ import lombok.*;
 @Table(name = "collection")
 public class Collection {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
@@ -21,7 +21,7 @@ public class Collection {
     @Column(nullable = false)
     private String description;
 
-    @Column(nullable = false)
+    @Column
     private String code;
 
     @Column(nullable = false)
