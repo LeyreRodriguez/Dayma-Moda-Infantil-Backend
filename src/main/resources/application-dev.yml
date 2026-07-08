@@ -10,6 +10,17 @@ spring:
     url: ${DB_URL}
     username: ${DB_USER}
     password: ${DB_PASSWORD}
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   session:
     jdbc:
       initialize-schema: always
@@ -20,5 +31,18 @@ spring:
     hibernate:
       ddl-auto: update
 jwt:
-  secret: ogVD0JMLscHsng7woUCi1P1xj3Yj1D5YQRk0p3KtM4P
+  secret: ${JWT}
   expiration-ms: 86400000
+
+cloudinary:
+  cloud-name: ${CLOUD-NAME}
+  api-key: ${API-KEY}
+  api-secret: ${API-SECRET}
+server:
+  port: 8080
+google:
+  client-id: ${GOOGLE_CLIENT_ID}
+app:
+  front-base-url: ${FRONT_BASE_URL}
+newsletter:
+  cron: "0 0 10 * * ?"
