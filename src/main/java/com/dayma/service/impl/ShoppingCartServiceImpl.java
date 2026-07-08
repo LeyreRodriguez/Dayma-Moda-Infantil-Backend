@@ -6,10 +6,7 @@ import com.dayma.mapper.ProductOrderMapper;
 import com.dayma.mapper.ShoppingCartMapper;
 import com.dayma.mapper.SizeMapper;
 import com.dayma.model.*;
-import com.dayma.repository.OrderRepository;
-import com.dayma.repository.OrderStatusRepository;
-import com.dayma.repository.ProductOrderRepository;
-import com.dayma.repository.ShoppingCartRepository;
+import com.dayma.repository.*;
 import com.dayma.service.ProductService;
 import com.dayma.service.ShoppingCartService;
 import com.dayma.service.SizeService;
@@ -19,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +35,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final ProductOrderRepository productOrderRepository;
     private final OrderStatusRepository orderStatusRepository;
     private final ProductOrderMapper productOrderMapper;
+    private final ProductSizeRepository productSizeRepository;
 
     @Override
     @Transactional
@@ -55,7 +54,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                     .size(sizeMapper.toEntity(size))
                     .build();
         } else {
-            shopCart.setQuantity(shopCart.getQuantity() + (shoppingCart.getQuantity() != null ? shoppingCart.getQuantity() : 1));
+            shopCart.setQuantity(shoppingCart.getQuantity() != null ? shoppingCart.getQuantity() : 1);
         }
         shoppingCartRepository.save(shopCart);
     }
@@ -114,7 +113,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 .appUser(user)
                 .total(total)
                 .status(status)
-                .date(LocalDate.now())
+                .date(LocalDateTime.now())
                 .build();
         order = orderRepository.save(order);
 
@@ -125,8 +124,18 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             ProductOrder productOrder = ProductOrder.builder()
                     .order(order)
                     .product(item.getProduct())
+                    .size(item.getSize())
+                    .quantity(item.getQuantity())
                     .build();
             productOrders.add(productOrderRepository.save(productOrder));
+
+            ProductSize productSize = productSizeRepository
+                    .findByProductAndSize(item.getProduct(), item.getSize())
+                    .orElse(null);
+            if (productSize != null && productSize.getStock() != null) {
+                productSize.setStock(productSize.getStock() - 1);
+                productSizeRepository.save(productSize);
+            }
         }
 
         shoppingCartRepository.deleteAll(cartItems);

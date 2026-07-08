@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductOrderDto {
-
+public class PendingOrderDto {
     private Long id;
-    private OrderDto order;
-    private ProductDto product;
-    private SizeDto size;
-    private Integer quantity;
+    private String customerName;
+    private String initials;
+    private String orderCode;
+    private long items;
+    private String status;
 }

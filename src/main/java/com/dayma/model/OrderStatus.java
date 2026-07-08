@@ -12,7 +12,7 @@ import lombok.*;
 @Table(name = "order_status")
 public class OrderStatus {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "status")

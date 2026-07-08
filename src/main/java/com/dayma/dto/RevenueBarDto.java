@@ -4,12 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductSizeDto {
-    private ProductDto product;
-    private SizeDto size;
-    private Integer stock;
+@Data
+public class RevenueBarDto {
+    private Integer month;
+    private Double amount;
 }

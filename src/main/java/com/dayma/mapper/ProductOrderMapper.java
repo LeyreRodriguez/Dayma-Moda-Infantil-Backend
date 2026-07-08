@@ -9,7 +9,7 @@ import org.mapstruct.Mapper;
 import java.util.List;
 
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = SizeMapper.class)
 public interface ProductOrderMapper {
 
     List<ProductOrderDto> toDtoList(List<ProductOrder> productOrders);

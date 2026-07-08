@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Table(name = "product")
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
@@ -33,13 +33,6 @@ public class Product {
     @JoinColumn(name = "category")
     private Category category;
 
-    @ManyToOne
-    @JoinColumn(name = "size")
-    private Size size;
-
-    @Column(name = "material")
-    private String material;
-
     @Column(name = "image_url")
     private String imageUrl;
 
@@ -52,5 +45,7 @@ public class Product {
     @Column(name = "insertion_date")
     private LocalDate insertionDate;
 
+    @Column(name = "archived")
+    private Boolean archived = false;
 
 }

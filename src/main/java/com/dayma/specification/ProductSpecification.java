@@ -53,6 +53,20 @@ public class ProductSpecification {
                         Double.parseDouble(filters.maxPrice())));
             }
 
+            if (filters.name() != null && !filters.name().isBlank()) {
+                predicates.add(cb.like(cb.lower(root.get("name")),
+                        "%" + filters.name().toLowerCase() + "%"));
+            }
+
+            if (filters.code() != null && !filters.code().isBlank()) {
+                predicates.add(cb.like(cb.lower(root.get("code")),
+                        "%" + filters.code().toLowerCase() + "%"));
+            }
+
+            if (filters.archived() != null) {
+                predicates.add(cb.equal(root.get("archived"), filters.archived()));
+            }
+
             return cb.and(predicates.toArray(new Predicate[0]));
         };
     }

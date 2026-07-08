@@ -3,11 +3,13 @@ package com.dayma.controller;
 import com.dayma.dto.*;
 import com.dayma.dto.response.GenericResponseDto;
 import com.dayma.dto.response.PageResponseDto;
+import com.dayma.model.ProductSize;
 import com.dayma.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +24,7 @@ public class ProductController {
     private final ProductImageService productImageService;
     private final ProductSizeService productSizeService;
     private final ProductOrderService productOrderService;
+    private final ProductCollectionService productCollectionService;
 
     @GetMapping
     public ResponseEntity<GenericResponseDto<PageResponseDto<ProductDto>>> getProducts(
@@ -63,8 +66,35 @@ public class ProductController {
         return ResponseEntity.ok(new GenericResponseDto<>(productOrderService.getProductOrder(orderCode)));
     }
 
+    @PutMapping("/{productCode}/sizes/{sizeCode}/stock")
+    public ResponseEntity<GenericResponseDto<ProductSizeDto>> updateSizeStock(@PathVariable String productCode, @PathVariable String sizeCode, @RequestBody UpdateStockRequest request) {
+        return ResponseEntity.ok(new GenericResponseDto<>(productSizeService.updateSizeStock(productCode, sizeCode, request)));
+    }
+
+    @PostMapping("/{productCode}/sizes")
+    public ResponseEntity<GenericResponseDto<ProductSizeDto>> addSizeToProduct(@PathVariable String productCode, @RequestBody AddSizeToProductRequest request) {
+        return ResponseEntity.ok(new GenericResponseDto<>(productSizeService.addSizeToProduct(productCode, request)));
+    }
+
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<GenericResponseDto<ProductDto>> create(@ModelAttribute  ProductRequest request) {
+        return ResponseEntity.ok(new GenericResponseDto<>(productService.createProduct(request)));
+    }
 
 
+    @PutMapping("/{productCode}/collection")
+    public ResponseEntity<GenericResponseDto<ProductDto>> updateCollection(@PathVariable String productCode, @RequestBody UpdateCollectionRequest collection) {
+        return ResponseEntity.ok(new GenericResponseDto<>(productCollectionService.updateCollection(productCode, collection.collectionCode())));
+    }
+    @DeleteMapping("/{productCode}/collection")
+    public ResponseEntity<GenericResponseDto<ProductDto>> deleteCollection(@PathVariable String productCode) {
+        return ResponseEntity.ok(new GenericResponseDto<>(productCollectionService.deleteCollection(productCode)));
+    }
+
+    @PutMapping("/{productCode}")
+    public ResponseEntity<GenericResponseDto<ProductDto>> updateCollection(@PathVariable String productCode, @RequestBody UpdateProductRequest collection) {
+        return ResponseEntity.ok(new GenericResponseDto<>(productService.updateProduct(productCode, collection.isNew(), collection.archived())));
+    }
 
 
 

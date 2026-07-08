@@ -8,6 +8,9 @@ public record ProductFiltersRequest (
         String maxPrice,
         String limit,
         String sortBy,
-        String collection
+        String collection,
+        String name,
+        String code,
+        Boolean archived
 ){
 }

@@ -14,9 +14,9 @@ public class ProductDto {
     private String longDescription;
     private Double price;
     private CategoryDto category;
-    private SizeDto size;
-    private String material;
     private String imageUrl;
     private Boolean isNew;
+    private Boolean archived;
     private String code;
+
 }

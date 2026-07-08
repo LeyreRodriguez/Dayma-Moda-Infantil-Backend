@@ -2,6 +2,7 @@ package com.dayma.service.impl;
 
 import com.dayma.dto.SizeDto;
 import com.dayma.mapper.SizeMapper;
+import com.dayma.model.Size;
 import com.dayma.repository.SizeRepository;
 import com.dayma.service.SizeService;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,16 @@ public class SizeServiceImpl implements SizeService {
     @Override
     public SizeDto getByCode(String code) {
         return sizeMapper.toDto(sizeRepository.findByCode(code));
+    }
+
+    @Override
+    public Size getEntityByCode(String code) {
+        return sizeRepository.findByCode(code);
+    }
+
+    @Override
+    public List<Size> getEntitiesByCodeIn(List<String> sizes) {
+        return sizeRepository.findByCodeIn(sizes);
     }
 
 

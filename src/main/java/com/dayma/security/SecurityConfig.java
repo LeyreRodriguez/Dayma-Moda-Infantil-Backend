@@ -45,6 +45,7 @@ public class SecurityConfig {
                         .requestMatchers( "/api/favourites/**").permitAll()
                         .requestMatchers( "/api/shoppingCart/**").permitAll()
                         .requestMatchers( "/api/order/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/newsletter/unsubscribe").permitAll()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )

@@ -14,7 +14,7 @@ import lombok.*;
 public class ProductSize {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
@@ -24,5 +24,8 @@ public class ProductSize {
     @ManyToOne
     @JoinColumn(name = "size")
     private Size size;
+
+    @Column(name = "stock")
+    private Integer stock;
 
 }

@@ -14,4 +14,6 @@ public interface ProductCollectionRepository extends JpaRepository<ProductCollec
     List<ProductCollection> findByCollectionId(Long collectionId);
 
     List<ProductCollection> findByProductCode(String productCode);
+
+    void deleteByProductCode(String productCode);
 }

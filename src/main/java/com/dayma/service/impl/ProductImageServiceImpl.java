@@ -2,6 +2,7 @@ package com.dayma.service.impl;
 
 import com.dayma.dto.ProductImageDto;
 import com.dayma.mapper.ProductImageMapper;
+import com.dayma.model.Product;
 import com.dayma.model.ProductImage;
 import com.dayma.repository.ProductImageRepository;
 import com.dayma.service.ProductImageService;
@@ -23,4 +24,17 @@ public class ProductImageServiceImpl implements ProductImageService {
         List<ProductImage> productImages = productImageRepository.findByProductCode(productCode);
         return productImageMapper.toDtoList(productImages);
     }
+
+    public ProductImageDto addProductImage(Product product, String url) {
+        ProductImage image = ProductImage.builder()
+                .product(product)
+                .image(url)
+                .build();
+
+        ProductImage saved = productImageRepository.save(image);
+
+        return productImageMapper.toDto(saved);
+    }
+
+
 }
