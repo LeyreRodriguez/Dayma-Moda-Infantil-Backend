@@ -19,6 +19,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -119,24 +122,40 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
         order.setCode("DM-" + order.getId());
 
-        List<ProductOrder> productOrders = new ArrayList<>();
-        for (ShoppingCart item : cartItems) {
-            ProductOrder productOrder = ProductOrder.builder()
-                    .order(order)
-                    .product(item.getProduct())
-                    .size(item.getSize())
-                    .quantity(item.getQuantity())
-                    .build();
-            productOrders.add(productOrderRepository.save(productOrder));
+        final Order savedOrder = order; // variable final para usar en el lambda
 
-            ProductSize productSize = productSizeRepository
-                    .findByProductAndSize(item.getProduct(), item.getSize())
-                    .orElse(null);
-            if (productSize != null && productSize.getStock() != null) {
-                productSize.setStock(productSize.getStock() - 1);
-                productSizeRepository.save(productSize);
+
+        List<ProductOrder> productOrders = cartItems.stream()
+                .map(item -> ProductOrder.builder()
+                        .order(savedOrder)
+                        .product(item.getProduct())
+                        .size(item.getSize())
+                        .quantity(item.getQuantity())
+                        .build())
+                .toList();
+        productOrders = productOrderRepository.saveAll(productOrders);
+
+        Map<String, Integer> qtyByKey = cartItems.stream()
+                .collect(Collectors.toMap(
+                        item -> item.getProduct().getCode() + "_" + item.getSize().getCode(),
+                        ShoppingCart::getQuantity,
+                        Integer::sum));
+        Map<String, ProductSize> sizeMap = cartItems.stream()
+                .map(item -> productSizeRepository
+                        .findByProductAndSize(item.getProduct(), item.getSize())
+                        .orElse(null))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toMap(
+                        ps -> ps.getProduct().getCode() + "_" + ps.getSize().getCode(),
+                        ps -> ps,
+                        (a, b) -> a));
+        sizeMap.values().forEach(ps -> {
+            if (ps.getStock() != null) {
+                ps.setStock(ps.getStock() - qtyByKey.getOrDefault(
+                        ps.getProduct().getCode() + "_" + ps.getSize().getCode(), 1));
             }
-        }
+        });
+        productSizeRepository.saveAll(sizeMap.values());
 
         shoppingCartRepository.deleteAll(cartItems);
 

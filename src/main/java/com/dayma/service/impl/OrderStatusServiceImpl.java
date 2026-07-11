@@ -6,6 +6,7 @@ import com.dayma.model.OrderStatus;
 import com.dayma.repository.OrderStatusRepository;
 import com.dayma.service.OrderStatusService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class OrderStatusServiceImpl implements OrderStatusService {
     private final OrderStatusMapper orderStatusMapper;
 
     @Override
+    @Cacheable("orderStatuses")
     public OrderStatus getByCode(String code) {
         return orderStatusRepository.findByCode(code);
     }

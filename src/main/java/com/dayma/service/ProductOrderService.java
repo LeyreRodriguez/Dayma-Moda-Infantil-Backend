@@ -11,4 +11,5 @@ public interface ProductOrderService {
     List<ProductOrderDto> getProductOrder(String orderCode);
     long countByOrder(Order order);
     ProductOrder save(ProductOrder productOrder);
+    List<ProductOrder> saveAll(List<ProductOrder> productOrders);
 }

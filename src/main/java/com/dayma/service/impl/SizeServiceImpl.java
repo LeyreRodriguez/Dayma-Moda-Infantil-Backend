@@ -5,8 +5,8 @@ import com.dayma.mapper.SizeMapper;
 import com.dayma.model.Size;
 import com.dayma.repository.SizeRepository;
 import com.dayma.service.SizeService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +28,7 @@ public class SizeServiceImpl implements SizeService {
     }
 
     @Override
+    @Cacheable("sizes")
     public Size getEntityByCode(String code) {
         return sizeRepository.findByCode(code);
     }

@@ -15,8 +15,11 @@ public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender mailSender;
 
+    @Value("${app.backend-base-url}")
+    private String backendBaseUrl;
+
     @Value("${app.front-base-url}")
-    private String baseUrl;
+    private String frontBaseUrl;
 
     @Override
     public void sendVerificationEmail(String to, String code) {
@@ -27,7 +30,7 @@ public class EmailServiceImpl implements EmailService {
             helper.setTo(to);
             helper.setSubject("Verifica tu cuenta - Dayma Moda Infantil");
 
-            String verificationUrl = baseUrl + "/api/auth/verify?code=" + code;
+            String verificationUrl = backendBaseUrl + "/api/auth/verify?code=" + code;
 
             String htmlContent = """
             <!DOCTYPE html>
@@ -223,7 +226,7 @@ public class EmailServiceImpl implements EmailService {
                 </table>
             </body>
             </html>
-            """.formatted(baseUrl, baseUrl, to);
+            """.formatted(frontBaseUrl, frontBaseUrl, to);
 
             helper.setText(htmlContent, true);
 

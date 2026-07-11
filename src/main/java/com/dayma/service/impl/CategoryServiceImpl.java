@@ -6,6 +6,7 @@ import com.dayma.model.Category;
 import com.dayma.repository.CategoryRepository;
 import com.dayma.service.CategoryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Cacheable("categories")
     public Category getByCode(String code) {
         return categoryRepository.findByCode(code);
     }

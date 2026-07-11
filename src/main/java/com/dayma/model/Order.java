@@ -12,7 +12,12 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "orders")
+@Table(name = "orders", indexes = {
+    @Index(name = "idx_order_code", columnList = "code", unique = true),
+    @Index(name = "idx_order_status", columnList = "status"),
+    @Index(name = "idx_order_user_id", columnList = "user_id"),
+    @Index(name = "idx_order_date", columnList = "date")
+})
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,14 +26,14 @@ public class Order {
     @Column(name = "total")
     private Double total;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "status")
     private OrderStatus status;
 
     @Column(name = "code")
     private String code;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User appUser;
 

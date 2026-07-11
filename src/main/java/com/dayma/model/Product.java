@@ -11,7 +11,13 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "product")
+@Table(name = "product", indexes = {
+    @Index(name = "idx_product_code", columnList = "code", unique = true),
+    @Index(name = "idx_product_category", columnList = "category"),
+    @Index(name = "idx_product_archived", columnList = "archived"),
+    @Index(name = "idx_product_is_new", columnList = "is_new"),
+    @Index(name = "idx_product_insertion_date", columnList = "insertion_date")
+})
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +35,7 @@ public class Product {
     @Column(name = "price")
     private Double price;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category")
     private Category category;
 

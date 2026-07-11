@@ -130,6 +130,7 @@ public class AdminServiceImpl implements AdminService {
 
         double total = 0;
         List<ProductOrder> productOrders = new ArrayList<>();
+        List<ProductSize> sizesToUpdate = new ArrayList<>();
 
         for (InStorePurchaseItem item : request.items()) {
             Product product = productService.getEntityProduct(item.productCode());
@@ -154,8 +155,9 @@ public class AdminServiceImpl implements AdminService {
                     .build());
 
             productSize.setStock(productSize.getStock() - item.quantity());
-            productSizeService.save(productSize);
+            sizesToUpdate.add(productSize);
         }
+        productSizeService.saveAll(sizesToUpdate);
 
         Order order = Order.builder()
                 .appUser(admin)
@@ -163,13 +165,14 @@ public class AdminServiceImpl implements AdminService {
                 .status(status)
                 .date(LocalDateTime.now())
                 .build();
+
         order = orderService.save(order);
         order.setCode("DM-" + order.getId());
 
-        for (ProductOrder po : productOrders) {
-            po.setOrder(order);
-            productOrderService.save(po);
-        }
+        final Order savedOrder = order;
+
+        productOrders.forEach(po -> po.setOrder(savedOrder));
+        productOrderService.saveAll(productOrders);
 
         return orderMapper.toDto(order);
     }

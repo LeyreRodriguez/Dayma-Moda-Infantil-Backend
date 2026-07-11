@@ -31,4 +31,9 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     public ProductOrder save(ProductOrder productOrder) {
         return productOrderRepository.save(productOrder);
     }
+
+    @Override
+    public List<ProductOrder> saveAll(List<ProductOrder> productOrders) {
+        return productOrderRepository.saveAll(productOrders);
+    }
 }

@@ -10,6 +10,7 @@ import com.dayma.service.CollectionService;
 import com.dayma.service.ProductCollectionService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -68,6 +69,7 @@ public class CollectionServiceImpl implements CollectionService {
     }
 
     @Override
+    @Cacheable("collections")
     public Collection getCollection(String collectionCode) {
         return collectionRepository.findByCode(collectionCode);
     }

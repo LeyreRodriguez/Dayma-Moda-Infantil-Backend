@@ -156,4 +156,9 @@ public class ProductSizeServiceImpl implements ProductSizeService {
     public ProductSize save(ProductSize productSize) {
         return productSizeRepository.save(productSize);
     }
+
+    @Override
+    public List<ProductSize> saveAll(List<ProductSize> productSizes) {
+        return productSizeRepository.saveAll(productSizes);
+    }
 }

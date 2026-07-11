@@ -19,5 +19,6 @@ public interface ProductSizeService {
 
     ProductSize getByProductAndSize(Product product, Size size);
     ProductSize save(ProductSize productSize);
+    List<ProductSize> saveAll(List<ProductSize> productSizes);
 
 }

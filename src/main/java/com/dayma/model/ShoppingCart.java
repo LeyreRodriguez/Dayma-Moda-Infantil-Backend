@@ -10,21 +10,25 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "shopping_cart")
+@Table(name = "shopping_cart", indexes = {
+    @Index(name = "idx_cart_user_id", columnList = "user_id"),
+    @Index(name = "idx_cart_product", columnList = "product"),
+    @Index(name = "idx_cart_user_product_size", columnList = "user_id, product, size", unique = true)
+})
 public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User appUser;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product")
     private Product product;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "size")
     private Size size;
 

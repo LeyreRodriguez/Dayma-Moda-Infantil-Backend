@@ -10,9 +10,17 @@ spring:
     url: ${DB_URL}
     username: ${DB_USER}
     password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 25
+      minimum-idle: 5
+      connection-timeout: 5000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      pool-name: DaymaPool
   mail:
     host: smtp.gmail.com
     port: 587
+    secure: false
     username: ${MAIL_USERNAME}
     password: ${MAIL_PASSWORD}
     properties:
@@ -30,6 +38,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 30
+        order_inserts: true
+        order_updates: true
 jwt:
   secret: ${JWT}
   expiration-ms: 86400000
@@ -43,6 +57,7 @@ server:
 google:
   client-id: ${GOOGLE_CLIENT_ID}
 app:
+  backend-base-url: ${BACKEND_BASE_URL:http://localhost:8080}
   front-base-url: ${FRONT_BASE_URL:http://localhost:5173}
 newsletter:
   cron: "0 0 0 L * *"
