@@ -1,55 +1,47 @@
-# 🧸 Dayma Moda Infantil - Backend
+# 🧸 Dayma Moda Infantil — Backend
 
-Este repositorio contiene el backend en desarrollo de la aplicación **Dayma Moda Infantil**, un sistema para la gestión de una tienda de ropa infantil ubicada en **Telde (Gran Canaria)**.
+API REST de **Dayma Moda Infantil**, una tienda física de ropa y complementos para bebés y
+niños en **Telde (Gran Canaria)**. Da servicio a la web de la tienda: un catálogo público
+para los clientes y un panel de administración para gestionar productos e inventario.
 
----
-
-## 🚧 Estado del proyecto
-
-⚠️ Este proyecto se encuentra actualmente en **fase de desarrollo activo**.
-
-Las funcionalidades están en construcción y pueden cambiar con frecuencia.
+Frontend: [Dayma-Moda-Infantil-Frontend](https://github.com/LeyreRodriguez/Dayma-Moda-Infantil-Frontend)
 
 ---
 
-## 🎯 Objetivo
+## ✅ Estado
 
-El objetivo de este backend es proporcionar una API REST robusta para soportar la gestión digital de la tienda, incluyendo:
-
-- Gestión de productos (ropa infantil, tallas, stock, precios)
-- Gestión de categorías
-- Posible sistema de usuarios y autenticación
-- Soporte para un futuro panel de administración
-- Comunicación con el frontend (React + Vite)
+**Terminado (junio 2026)** y desplegado en un **entorno de preproducción** para su validación
+con la propietaria de la tienda.
 
 ---
 
-## 🏪 Sobre el proyecto
+## 🎯 Funcionalidades
 
-**Dayma Moda Infantil** es una tienda física situada en **Telde (Gran Canaria)**, especializada en ropa y complementos para bebés y niños.
-
-Este backend es la base del sistema digital que permitirá la gestión interna y futura expansión hacia una plataforma de venta online.
-
----
-
-## ⚙️ Tecnologías utilizadas
-
-Dependiendo del estado del proyecto, el backend puede incluir:
-
-- ☕ Java / Spring Boot *(o tecnología equivalente)*
-- 🌐 API REST
-- 🗄️ Base de datos relacional (MySQL / PostgreSQL)
-- 🔐 Seguridad (JWT en fases futuras)
-- 📦 Maven o Gradle
+- **Catálogo público:** consulta de productos y categorías.
+- **Encargos online para recoger en tienda.** No hay pasarela de pago: por política del
+  negocio, el pago se hace de forma presencial al recoger el pedido.
+- **Modo administrador:** alta, edición y baja de productos y categorías, y **gestión de
+  inventario** (tallas, stock y precios).
 
 ---
 
-## 📡 API REST (en desarrollo)
+## 🧱 Tecnologías
 
-La API está diseñada para ser consumida por el frontend.
+- ☕ **Java** + **Spring Boot**
+- 🌐 **API REST**
+- 🗄️ **PostgreSQL**
+- 📦 **Maven**
+- 🐳 **Docker**
+---
 
-Ejemplos de endpoints futuros:
+
+## 🚀 Cómo ejecutarlo
+
+### Requisitos
+- Java 21 
+- PostgreSQL (o Docker)
 
 
-
-## DESARROLLADO POR LEYRE RODRIGUEZ
+Desarrollado por **Leyre Rodríguez Quintana** ·
+[LinkedIn](https://www.linkedin.com/in/leyrerodriguezquintana) ·
+[GitHub](https://github.com/LeyreRodriguez)
